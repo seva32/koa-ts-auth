@@ -1,13 +1,6 @@
 # Node - Koa - Typescript Project
 
-[![NPM version](https://img.shields.io/npm/v/node-typescript-koa-rest.svg)](https://www.npmjs.com/package/node-typescript-koa-rest)
-[![Dependency Status](https://david-dm.org/javieraviles/node-typescript-koa-rest.svg)](https://david-dm.org/javieraviles/node-typescript-koa-rest)
-
-The main purpose of this repository is to build a good project setup and workflow for writing a Node api rest in TypeScript using KOA and an SQL DB.
-
-Koa is a new web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for web applications and APIs. Through leveraging generators Koa allows you to ditch callbacks and greatly increase error-handling. Koa does not bundle any middleware within core, and provides an elegant suite of methods that make writing servers fast and enjoyable.
-
-Through Github Actions CI, this boilerplate is deployed [here](https://node-typescript-koa-rest.herokuapp.com/)! You can try to make requests to the different defined endpoints and see how it works. The following Authorization header will have to be set (already signed with the boilerplate's secret) to pass the JWT middleware:
+You can try to make requests to the different defined endpoints and see how it works. The following Authorization header will have to be set (already signed with the boilerplate's secret) to pass the JWT middleware:
 
 HEADER (DEMO)
 
@@ -15,7 +8,7 @@ HEADER (DEMO)
 Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoiSmF2aWVyIEF2aWxlcyIsImVtYWlsIjoiYXZpbGVzbG9wZXouamF2aWVyQGdtYWlsLmNvbSJ9.7oxEVGy4VEtaDQyLiuoDvzdO0AyrNrJ_s9NU3vko5-k
 ```
 
-AVAILABLE ENDPOINTS DEMO [SWAGGER DOCS DEMO](https://node-typescript-koa-rest.herokuapp.com/swagger-html)
+AVAILABLE ENDPOINTS
 
 When running the project locally with `watch-server`, being `.env` file config the very same as `.example.env` file, the swagger docs will be deployed at: `http:localhost:3000/swagger-html`, and the bearer token for authorization should be as follows:
 
@@ -25,14 +18,16 @@ HEADER (LOCALHOST BASED ON DEFAULT SECRET KEY 'your-secret-whatever')
 Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoiSmF2aWVyIEF2aWxlcyIsImVtYWlsIjoiYXZpbGVzbG9wZXouamF2aWVyQGdtYWlsLmNvbSJ9.rgOobROftUYSWphkdNfxoN2cgKiqNXd4Km4oz6Ex4ng
 ```
 
-| method   | resource     | description                                                                                    |
-| :------- | :----------- | :--------------------------------------------------------------------------------------------- |
-| `GET`    | `/`          | Simple hello world response                                                                    |
-| `GET`    | `/users`     | returns the collection of users present in the DB                                              |
-| `GET`    | `/users/:id` | returns the specified id user                                                                  |
-| `POST`   | `/users`     | creates a user in the DB (object user to be includued in request's body)                       |
-| `PUT`    | `/users/:id` | updates an already created user in the DB (object user to be includued in request's body)      |
-| `DELETE` | `/users/:id` | deletes a user from the DB (JWT token user ID must be the same as the user you want to delete) |
+| method   | resource         | description                                                                                    |
+| :------- | :--------------- | :--------------------------------------------------------------------------------------------- |
+| `GET`    | `/`              | Simple hello world response                                                                    |
+| `POST`   | `/auth/register` | returns jwt and user data                                                                      |
+| `POST`   | `/auth/login`    | returns jwt and user data                                                                      |
+| `GET`    | `/users`         | returns the collection of users present in the DB                                              |
+| `GET`    | `/users/:id`     | returns the specified id user                                                                  |
+| `POST`   | `/users`         | creates a user in the DB (object user to be included in request's body)                        |
+| `PUT`    | `/users/:id`     | updates an already created user in the DB (object user to be included in request's body)       |
+| `DELETE` | `/users/:id`     | deletes a user from the DB (JWT token user ID must be the same as the user you want to delete) |
 
 - [Node - Koa - Typescript Project](#node---koa---typescript-project)
   - [Pre-reqs](#pre-reqs)
@@ -57,21 +52,6 @@ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoiSmF2aWVyIEF2
 - [Authentication - Security](#authentication---security)
   - [CORS](#cors)
   - [Helmet](#helmet)
-- [Dependencies](#dependencies)
-  - [dependencies](#dependencies-1)
-  - [devDependencies](#devdependencies)
-  - [Changelog](#changelog)
-    - [1.7.1](#171)
-    - [1.7.0](#170)
-    - [1.6.1](#161)
-    - [1.6.0](#160)
-    - [1.5.0](#150)
-    - [1.4.2](#142)
-    - [1.4.1](#141)
-    - [1.4.0](#140)
-    - [1.3.0](#130)
-    - [1.2.0](#120)
-    - [1.1.0](#110)
 
 ## Pre-reqs
 
@@ -498,118 +478,5 @@ app.use(helmet());
 
 Have a look at [Official koa-helmet docs](https://github.com/venables/koa-helmet) in case you want to customize which security middlewares are enabled.
 
-# Dependencies
-
-Dependencies are managed through `package.json`.
-In that file you'll find two sections:
-
-## dependencies
-
-| Package               | Description                                                            |
-| --------------------- | ---------------------------------------------------------------------- |
-| dotenv                | Loads environment variables from .env file.                            |
-| koa                   | Node web framework.                                                    |
-| koa-bodyparser        | A bodyparser for koa.                                                  |
-| koa-jwt               | Middleware to validate JWT tokens.                                     |
-| @koa/router           | Router middleware for koa.                                             |
-| koa-helmet            | Wrapper for helmet, important security headers to make app more secure |
-| @koa/cors             | Cross-Origin Resource Sharing(CORS) for koa                            |
-| pg                    | PostgreSQL driver, needed for the ORM.                                 |
-| reflect-metadata      | Used by typeORM to implement decorators.                               |
-| typeorm               | A very cool SQL ORM.                                                   |
-| winston               | Logging library.                                                       |
-| class-validator       | Decorator based entities validation.                                   |
-| koa-swagger-decorator | using decorator to automatically generate swagger doc for koa-router.  |
-| cron                  | Register cron jobs in node.                                            |
-
-## devDependencies
-
-| Package    | Description                                                            |
-| ---------- | ---------------------------------------------------------------------- |
-| @types     | Dependencies in this folder are `.d.ts` files used to provide types    |
-| nodemon    | Utility that automatically restarts node process when it crashes       |
-| ts-node    | Enables directly running TS files. Used to run `copy-static-assets.ts` |
-| eslint     | Linter for Javascript/TypeScript files                                 |
-| typescript | JavaScript compiler/type checker that boosts JavaScript productivity   |
-| shelljs    | Portable Unix shell commands for Node.js                               |
-
-To install or update these dependencies you can use `npm install` or `npm update`.
-
-## Changelog
-
-### 1.8.0
-
-- Unit tests included using Jest (Thanks to [@rafapaezbas](https://github.com/rafapaezbas))
-- Upgrade all dependencies
-- Upgrade to Node 14
-
-### 1.7.1
-
-- Upgrading Locust + fixing load tests
-- Improving Logger
-
-### 1.7.0
-
-- Migrating `TSLint` (deprecated already) to `ESLint`
-- Node version upgraded from `10.x.x` to `12.0.0` (LTS)
-- Now CI installs from `package-lock.json` using `npm ci` (Beyond guaranteeing you that you'll only get what is in your lock-file it's also much faster (2x-10x!) than npm install when you don't start with a node_modules).
-- included integraton test using Newman for local env too
-- `koa-router` deprecated, using new fork from koa team `@koa/router`
-- Dependencies updated, some @types removed as more and more libraries include their own types now!
-- Typescript to latest
-
-### 1.6.1
-
-- Fixing CI
-- Improving integration tests robustness
-
-### 1.6.0
-
-- CI migrated from Travis to Github actions
-- cron dependency -> register cron jobs
-- Node app dockerized -> now is directly pushed as a docker image to Heroku from CI, not using any webhook
-- Added postman integration tests, executed from Github actions CI using Newman
-- Added locust load tests, executed from Github actions CI
-- PRs merged: [47](https://github.com/javieraviles/node-typescript-koa-rest/pull/47), [48](https://github.com/javieraviles/node-typescript-koa-rest/pull/48) and [49](https://github.com/javieraviles/node-typescript-koa-rest/pull/49). Thanks to everybody!
-
-### 1.5.0
-
-- koa-swagger-decorator -> generate [swagger docs](https://node-typescript-koa-rest.herokuapp.com/swagger-html) with decorators in the endpoints
-- Split routes into protected and unprotected. Hello world + swagger docs are not proteted by jwt
-- some dependencies have been updated
-
-### 1.4.2
-
-- Fix -> `npm run watch-server` is now working properly live-reloading changes in the code [Issue 39](https://github.com/javieraviles/node-typescript-koa-rest/issues/39).
-- Fix -> Logging levels were not correctly mapped. Thanks to @atamano for the PR [Pull Request 35](https://github.com/javieraviles/node-typescript-koa-rest/pull/35)
-- Some code leftovers removed
-
-### 1.4.1
-
-- Fix -> After updating winston to 3.0.0, it was throwing an error when logging errors into file
-- Fix -> Config in config.ts wasn't implementing IConfig interface
-
-### 1.4.0
-
-- Dotenv lib updated, no changes needed (they are dropping node4 support)
-- Class-validator lib updated, no chages needed (cool features added like IsPhoneNumber or custom context for decorators)
-- Winston lib updated to 3.0.0, some amendments needed to format the console log. Removed the @types as Winston now supports Typescript natively!
-- Some devDependencies updated as well
-
-### 1.3.0
-
-- CORS added
-- Syntax full REST
-- Some error handling improvement
-
-### 1.2.0
-
-- Heroku deployment added
-
-### 1.1.0
-
-- Added Helmet for security
-- Some bad practices await/async fixed
-
-Fijarse el sitio jwt.io para generar un token valido con la clave de la config.
-No estoy usando dokcer, por eso comente el codigo de configuracion del index.ts, aparte no estoy usando heroku.
+[jwt.io](jwt.io) generate token with secret code.
+Commented out docker config index.ts
